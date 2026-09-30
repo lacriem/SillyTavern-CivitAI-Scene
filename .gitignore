@@ -16,3 +16,6 @@ openapi.yaml
 Thumbs.db
 .vscode/
 .idea/
+
+# Tooling scratch output
+.playwright-mcp/

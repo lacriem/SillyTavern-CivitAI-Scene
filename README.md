@@ -33,7 +33,9 @@ Then restart SillyTavern and open **Extensions → CivitAI Scene Generator**.
 
 ### Requirements
 
-* SillyTavern **1.12.0** or newer.
+* SillyTavern **1.14.0 or newer**. The manifest declares `minimum_client_version`, so on an older
+  build the extension refuses to load with a readable message instead of a silent
+  `failed to load: [object Event]`. Check your version under *Extensions → Information*.
 * A **CivitAI API key** (create one at <https://civitai.com/> → *Account* → *API Keys*). It is paid
   out of your Buzz balance, so generation is never free.
 * Any chat-completion connection you already have configured in SillyTavern — that is the model
@@ -178,6 +180,16 @@ extension at runtime.
 
 **`Manifest file not found`** — the URL must point at the repository root, not at a file or a
 subdirectory.
+
+**`failed to load: [object Event]`** — one of the SillyTavern modules this extension imports
+does not exist in your build, so the browser fails to link the module graph and the error event
+carries no message. The imports need **ST 1.14.0+**; check your version under
+*Extensions → Information* and update SillyTavern if it is older. Open the browser console
+(F12) and look for the line next to `Could not activate extension civitai-scene` — it names the
+exact module that 404'd.
+
+**Only the name shows up, no panel or button** — same cause as above: the script never executed,
+so `init()` never ran. Check the console.
 
 **Prompt looks empty or generic** — raise `LLM response length`; reasoning models spend most of
 their budget thinking. Check the generation log for the raw request.
