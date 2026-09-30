@@ -1,0 +1,542 @@
+.civitai_scene_settings label {
+    display: block;
+    margin-top: 8px;
+}
+
+.civitai_scene_settings small {
+    display: block;
+    opacity: 0.7;
+    margin-bottom: 4px;
+}
+
+.civitai_scene_settings hr {
+    margin: 12px 0 4px 0;
+    opacity: 0.4;
+}
+
+.civitai_scene_settings .checkbox_label {
+    margin-top: 8px;
+}
+
+.cs_buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+/* Status bar */
+
+.cs_status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0 4px 0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    border: 1px solid var(--SmartThemeBorderColor);
+    background: var(--black30a);
+}
+
+.cs_status.hidden {
+    display: none;
+}
+
+.cs_status span {
+    word-break: break-word;
+    flex: 1;
+}
+
+.cs_status_busy {
+    border-color: var(--SmartThemeQuoteColor);
+}
+
+.cs_status_success {
+    border-color: #3cad6e;
+}
+
+.cs_status_error {
+    border-color: #e05c5c;
+    color: #ff9c9c;
+}
+
+.cs_status i {
+    flex-shrink: 0;
+}
+
+.cs_status_spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--SmartThemeBodyColor);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: cs_spin 0.8s linear infinite;
+}
+
+.cs_status_dots {
+    display: flex;
+    gap: 3px;
+    flex-shrink: 0;
+}
+
+.cs_status_dots span {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--SmartThemeBodyColor);
+    animation: cs_bounce 1.2s infinite;
+}
+
+.cs_status_dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.cs_status_dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes cs_spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes cs_bounce {
+    0%, 60%, 100% {
+        opacity: 0.2;
+        transform: translateY(0);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(-3px);
+    }
+}
+
+/* Busy trigger buttons */
+
+.cs-busy {
+    animation: cs_pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes cs_pulse {
+    0%, 100% {
+        filter: brightness(1);
+    }
+
+    50% {
+        filter: brightness(1.6);
+    }
+}
+
+/* Quick button next to the message input */
+
+#cs_quick_gen {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 6px;
+    color: var(--SmartThemeBodyColor);
+    text-shadow: 0 0 5px var(--shadow);
+    transition: color 0.2s ease;
+}
+
+#cs_quick_gen:hover {
+    color: var(--SmartThemeBodyColor);
+    filter: brightness(1.4);
+}
+
+/* Shimmer placeholder while generating */
+
+.cs_placeholder {
+    position: relative;
+    height: 220px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--SmartThemeBorderColor);
+    background: linear-gradient(100deg, var(--black30a) 30%, var(--grey30a) 50%, var(--black30a) 70%);
+    background-size: 200% 100%;
+    animation: cs_shimmer 1.6s linear infinite;
+}
+
+@keyframes cs_shimmer {
+    to {
+        background-position: -200% 0;
+    }
+}
+
+.cs_placeholder_inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    text-align: center;
+}
+
+.cs_placeholder_inner i {
+    font-size: 28px;
+    opacity: 0.5;
+    animation: cs_float 2s ease-in-out infinite;
+}
+
+@keyframes cs_float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.cs_placeholder_label {
+    font-size: 11px;
+    opacity: 0.75;
+    word-break: break-word;
+    max-height: 120px;
+    overflow: auto;
+}
+
+/* Error box */
+
+.cs_error {
+    border: 1px solid #e05c5c;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(224, 92, 92, 0.08);
+}
+
+.cs_error_header {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 10px;
+    background: rgba(224, 92, 92, 0.15);
+    color: #ff9c9c;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.cs_error_body {
+    margin: 0;
+    padding: 8px 10px;
+    font-size: 11px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 200px;
+    overflow: auto;
+    font-family: var(--monoFontFamily, monospace);
+}
+
+/* Model selector */
+
+.cs_model_row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.cs_model_row input,
+.cs_model_row select {
+    flex: 1;
+    min-width: 0;
+}
+
+.cs_model_row .menu_button {
+    flex-shrink: 0;
+}
+
+.cs_row_label {
+    flex-shrink: 0;
+    width: auto;
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.cs_model_row.hidden,
+.civitai_scene_settings .hidden {
+    display: none !important;
+}
+
+.cs_model_list {
+    margin-top: 6px;
+    max-height: 220px;
+    overflow-y: auto;
+    border: 1px solid var(--SmartThemeBorderColor);
+    border-radius: 8px;
+    background: var(--black30a);
+}
+
+.cs_model_item {
+    padding: 6px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border-bottom: 1px solid var(--SmartThemeBorderColor);
+    transition: background 0.15s ease;
+}
+
+.cs_model_item:last-child {
+    border-bottom: none;
+}
+
+.cs_model_item:hover {
+    background: var(--grey30a);
+}
+
+.cs_model_item.cs_selected {
+    background: var(--grey20a);
+    box-shadow: inset 3px 0 0 var(--SmartThemeQuoteColor);
+}
+
+.cs_model_item.cs_selected span:first-child::after {
+    content: " \2713";
+    color: #3cad6e;
+}
+
+.cs_model_item.cs_locked {
+    opacity: 0.45;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+.cs_model_meta {
+    opacity: 0.6;
+    font-size: 10px;
+}
+
+.cs_model_empty {
+    padding: 8px 10px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.cs_result {
+    margin-top: 12px;
+}
+
+.cs_result_image {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    animation: cs_fade_in 0.5s ease-out;
+}
+
+@keyframes cs_fade_in {
+    from {
+        opacity: 0;
+        transform: scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.cs_result_prompt {
+    margin-top: 6px;
+    font-size: 12px;
+    opacity: 0.8;
+    word-break: break-word;
+}
+
+.cs_lora_row {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.cs_lora_row .cs_lora_air {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.cs_lora_row .cs_lora_strength {
+    flex: 0 0 74px;
+}
+
+.cs_lora_row .menu_button {
+    flex: 0 0 auto;
+    padding: 4px 7px;
+}
+
+.cs_resolve_status {
+    display: block;
+    margin: 2px 0 6px;
+    font-size: 12px;
+    opacity: 0.75;
+    word-break: break-word;
+}
+
+.cs_resolve_status:empty {
+    display: none;
+}
+
+.cs_resolve_ok {
+    color: var(--success-color, #4caf50);
+    opacity: 1;
+}
+
+.cs_resolve_warn {
+    color: var(--warning-color, #ff9800);
+    opacity: 1;
+}
+
+/* Prompt style hints */
+.cs_hint {
+    display: block;
+    margin: 2px 0 4px;
+    opacity: 0.75;
+    font-size: 0.85em;
+    line-height: 1.35;
+}
+
+.cs_prompt_style {
+    margin: 6px 0;
+    padding: 6px 8px;
+    border-left: 3px solid var(--SmartThemeBorderColor, #444);
+    border-radius: 3px;
+    background: rgba(127, 127, 127, 0.07);
+}
+
+.cs_prompt_style_head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.cs_prompt_style_head span {
+    flex: 1 1 auto;
+}
+
+.cs_mini_button {
+    display: inline-block;
+    padding: 2px 8px;
+    border: 1px solid var(--SmartThemeBorderColor, #444);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.8em;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
+.cs_mini_button:hover {
+    opacity: 1;
+    border-color: var(--SmartThemeBorderColorAlt, #888);
+}
+
+.cs_mini_button.cs_mini_danger {
+    border-color: #c0392b;
+    color: #e74c3c;
+}
+
+/* Job log */
+.cs_joblog_panel {
+    margin: 8px 0;
+    border: 1px solid var(--SmartThemeBorderColor, #444);
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+
+/*
+ * resetJobLog() marks the panel as `.open` so a running job is visible without the
+ * user having to find the disclosure triangle. A <details> is opened by the `open`
+ * ATTRIBUTE, so this rule only carries the visual emphasis — the attribute does the
+ * expanding.
+ */
+.cs_joblog_panel.open {
+    border-color: var(--SmartThemeQuoteColor, #6b8cff);
+    box-shadow: 0 0 0 1px var(--SmartThemeQuoteColor, #6b8cff) inset;
+}
+
+.cs_joblog_panel > summary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    list-style: none;
+}
+
+.cs_joblog_panel > summary::-webkit-details-marker {
+    display: none;
+}
+
+.cs_joblog_state {
+    margin-left: auto;
+    font-size: 0.75em;
+    padding: 1px 8px;
+    border-radius: 10px;
+    border: 1px solid var(--SmartThemeBorderColor, #444);
+    opacity: 0.85;
+}
+
+.cs_joblog_busy { color: #f39c12; border-color: #f39c12 !important; }
+.cs_joblog_good { color: #2ecc71; border-color: #2ecc71 !important; }
+.cs_joblog_error { color: #e74c3c; border-color: #e74c3c !important; }
+
+.cs_joblog_bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 0;
+    font-size: 0.85em;
+}
+
+#cs_joblog_summary {
+    flex: 1 1 auto;
+    opacity: 0.85;
+}
+
+.cs_joblog_actions {
+    display: flex;
+    gap: 6px;
+    flex: 0 0 auto;
+}
+
+.cs_joblog {
+    margin: 0;
+    padding: 6px 8px;
+    max-height: 260px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.8em;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.cs_joblog_line {
+    display: flex;
+    gap: 8px;
+}
+
+.cs_joblog_time {
+    flex: 0 0 auto;
+    opacity: 0.5;
+}
+
+.cs_joblog_msg {
+    flex: 1 1 auto;
+}
+
+.cs_joblog_line_good .cs_joblog_msg { color: #2ecc71; }
+.cs_joblog_line_warn .cs_joblog_msg { color: #f39c12; }
+.cs_joblog_line_error .cs_joblog_msg { color: #e74c3c; }
+.cs_joblog_line_muted .cs_joblog_msg { opacity: 0.6; }

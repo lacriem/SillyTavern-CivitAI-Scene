@@ -1,0 +1,15 @@
+# Normalise line endings for text files, keep binaries untouched.
+* text=auto eol=lf
+
+*.js   text eol=lf diff=javascript
+*.mjs  text eol=lf diff=javascript
+*.json text eol=lf
+*.html text eol=lf diff=html
+*.css  text eol=lf diff=css
+*.md   text eol=lf diff=markdown
+
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.gif  binary

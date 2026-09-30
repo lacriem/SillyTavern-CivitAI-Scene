@@ -1,0 +1,31 @@
+{
+    "name": "sillytavern-civitai-scene",
+    "version": "1.0.0",
+    "description": "SillyTavern extension: generate images of the current scene via the CivitAI Orchestration API (70+ model profiles, LoRAs, checkpoints, reference and control images).",
+    "author": "Lacriem",
+    "license": "MIT",
+    "type": "module",
+    "private": true,
+    "main": "index.js",
+    "keywords": [
+        "sillytavern",
+        "extension",
+        "civitai",
+        "image-generation",
+        "roleplay"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lacriem/SillyTavern-CivitAI-Scene.git"
+    },
+    "bugs": {
+        "url": "https://github.com/lacriem/SillyTavern-CivitAI-Scene/issues"
+    },
+    "homepage": "https://github.com/lacriem/SillyTavern-CivitAI-Scene#readme",
+    "engines": {
+        "sillytavern": ">=1.12.0"
+    },
+    "scripts": {
+        "validate": "node validate-profiles.mjs"
+    }
+}

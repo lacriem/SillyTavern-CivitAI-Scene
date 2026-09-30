@@ -1,0 +1,225 @@
+<div class="civitai_scene_settings">
+    <div class="inline-drawer">
+        <div class="inline-drawer-toggle inline-drawer-header">
+            <b>
+                <span>CivitAI Scene Generator</span>
+                <a href="https://developer.civitai.com/orchestration/recipes/anima/" class="notes-link" target="_blank">
+                    <span class="note-link-span">?</span>
+                </a>
+            </b>
+            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+        </div>
+        <div class="inline-drawer-content">
+            <div id="cs_status" class="cs_status hidden"></div>
+
+            <label for="cs_api_key">CivitAI API Key</label>
+            <input id="cs_api_key" class="text_pole" type="password" placeholder="CivitAI API token" autocomplete="off" />
+
+            <label for="cs_engine">Engine / ecosystem</label>
+            <select id="cs_engine" class="text_pole"></select>
+            <div class="cs_model_row">
+                <label for="cs_model_variant" class="cs_row_label">Model</label>
+                <select id="cs_model_variant" class="text_pole"></select>
+            </div>
+            <div id="cs_model_version_row" class="cs_model_row hidden">
+                <label for="cs_model_version" class="cs_row_label">Version</label>
+                <select id="cs_model_version" class="text_pole"></select>
+            </div>
+            <small id="cs_engine_note"></small>
+
+            <div id="cs_checkpoint_block">
+                <label for="cs_model_search">Checkpoint model</label>
+                <div class="cs_model_row">
+                    <input id="cs_model_search" class="text_pole" type="search" placeholder="Search checkpoints… (empty = built-in model)" autocomplete="off" />
+                    <a id="cs_models_refresh" class="menu_button" title="Fetch checkpoints for the selected ecosystem currently loaded on the CivitAI generation fleet (only those can generate)">
+                        <i class="fa-solid fa-rotate fa-fw"></i>
+                    </a>
+                </div>
+                <div id="cs_model_list" class="cs_model_list"></div>
+                <small id="cs_model_count"></small>
+                <small>Only checkpoints physically loaded on the CivitAI cloud AND enabled for generation can be used — greyed-out entries cannot run in the cloud.</small>
+
+                <label for="cs_checkpoint_urn">Checkpoint URN (AIR)</label>
+                <div class="cs_model_row">
+                    <input id="cs_checkpoint_urn" class="text_pole" type="text" placeholder="paste a CivitAI link or id and press Resolve" autocomplete="off" />
+                    <a id="cs_checkpoint_resolve" class="menu_button" title="Look the pasted link up on civitai.com and fill in its AIR URN">
+                        <i class="fa-solid fa-magnifying-glass fa-fw"></i>
+                    </a>
+                </div>
+                <small id="cs_checkpoint_status" class="cs_resolve_status"></small>
+                <small>Leave empty to use the built-in model. You can paste any CivitAI model link (<code>civitai.com/models/12345</code>), a bare id, <code>modelId@versionId</code>, or a full AIR URN — "Resolve" turns it into the exact AIR the API expects.</small>
+
+                <div id="cs_extra_checkpoints_block"></div>
+            </div>
+
+            <div id="cs_loras_block" class="hidden">
+                <hr>
+                <label>LoRAs</label>
+                <div id="cs_loras_list"></div>
+                <a id="cs_lora_add" class="menu_button" title="Add a LoRA by CivitAI link, id or AIR URN">
+                    <i class="fa-solid fa-plus fa-fw"></i>
+                    <span>Add LoRA</span>
+                </a>
+                <small id="cs_loras_status"></small>
+            </div>
+
+            <div class="cs_buttons">
+                <a id="cs_preset_load" class="menu_button" title="Apply the settings you saved for the current engine and model">
+                    <i class="fa-solid fa-folder-open fa-fw"></i>
+                    <span>Load my preset</span>
+                </a>
+                <a id="cs_preset_save" class="menu_button" title="Save the current resolution / steps / CFG / prompts as your own preset for this engine and model">
+                    <i class="fa-solid fa-floppy-disk fa-fw"></i>
+                    <span>Save current as my preset</span>
+                </a>
+            </div>
+
+            <small>Presets store resolution, steps, CFG and both prompts separately for every engine / model you pick (the seed is never touched). Nothing is taken from the CivitAI page — fill the fields in yourself and press "Save current as my preset"; "Load my preset" puts them back. If you have no saved preset, "Load my preset" applies the official recipe defaults for the selected engine.</small>
+
+            <hr>
+
+            <label for="cs_scene_depth">Scene depth (last chat messages sent to the LLM)</label>
+            <input id="cs_scene_depth" class="text_pole" type="number" min="1" max="100" step="1" />
+
+            <label for="cs_response_length">LLM response length (tokens)</label>
+            <input id="cs_response_length" class="text_pole" type="number" min="64" max="4096" step="1" />
+            <small>Reasoning models spend tokens on thinking first — set this high enough (1000+) for the model to finish reasoning AND write the prompt.</small>
+
+            <label for="cs_llm_instruction">LLM instruction (how to turn the scene into an image prompt)</label>
+            <textarea id="cs_llm_instruction" class="text_pole textarea_compact" rows="8"></textarea>
+
+            <hr>
+
+            <div id="cs_size_group">
+                <label for="cs_resolution">Resolution</label>
+                <select id="cs_resolution" class="text_pole">
+                    <option value="512x512">512 x 512</option>
+                    <option value="768x768">768 x 768</option>
+                    <option value="832x1216">832 x 1216 (portrait)</option>
+                    <option value="1216x832">1216 x 832 (landscape)</option>
+                    <option value="1024x1024">1024 x 1024</option>
+                    <option value="1344x768">1344 x 768 (wide)</option>
+                    <option value="768x1344">768 x 1344 (tall)</option>
+                </select>
+            </div>
+
+            <div id="cs_ratio_group" class="hidden">
+                <label for="cs_aspect_ratio">Aspect ratio</label>
+                <select id="cs_aspect_ratio" class="text_pole"></select>
+            </div>
+
+            <div id="cs_image_size_group" class="hidden">
+                <label for="cs_image_size">Image size</label>
+                <select id="cs_image_size" class="text_pole"></select>
+            </div>
+
+            <div id="cs_openai_size_group" class="hidden">
+                <label for="cs_openai_size">Size</label>
+                <select id="cs_openai_size" class="text_pole"></select>
+            </div>
+
+            <div id="cs_model_version_variant_row" class="hidden">
+                <label for="cs_model_version_variant">Parameter size</label>
+                <select id="cs_model_version_variant" class="text_pole"></select>
+            </div>
+
+            <div id="cs_extras_block"></div>
+
+            <div id="cs_steps_group">
+                <label for="cs_steps" id="cs_steps_label">Steps</label>
+                <input id="cs_steps" class="text_pole" type="number" step="1" />
+            </div>
+
+            <div id="cs_cfg_group">
+                <label for="cs_cfg" id="cs_cfg_label">Guidance</label>
+                <input id="cs_cfg" class="text_pole" type="number" step="0.5" />
+                <small id="cs_cfg_hint" class="cs_hint"></small>
+            </div>
+
+            <div id="cs_sampler_group">
+                <label for="cs_sampler">Sampler</label>
+                <select id="cs_sampler" class="text_pole"></select>
+            </div>
+
+            <div id="cs_scheduler_group">
+                <label for="cs_scheduler">Scheduler</label>
+                <select id="cs_scheduler" class="text_pole"></select>
+            </div>
+
+            <div id="cs_quantity_group">
+                <label for="cs_quantity">Number of images</label>
+                <input id="cs_quantity" class="text_pole" type="number" min="1" step="1" />
+            </div>
+
+            <label for="cs_seed">Seed (-1 = random)</label>
+            <input id="cs_seed" class="text_pole" type="number" step="1" />
+
+            <div class="cs_prompt_style">
+                <div class="cs_prompt_style_head">
+                    <i class="fa-solid fa-feather-pointed fa-fw"></i>
+                    <span id="cs_prompt_style_label">Prompt style</span>
+                    <a id="cs_prompt_example" class="cs_mini_button" title="Put the recommended example for this model into the prompt box">Use example</a>
+                </div>
+                <small id="cs_prompt_style_hint" class="cs_hint"></small>
+            </div>
+
+            <label for="cs_prompt_prefix">Prompt prefix</label>
+            <textarea id="cs_prompt_prefix" class="text_pole textarea_compact" rows="2"></textarea>
+
+            <div id="cs_negative_hint_wrap" class="cs_prompt_style">
+                <small id="cs_negative_hint" class="cs_hint"></small>
+                <a id="cs_negative_example" class="cs_mini_button" title="Fill the negative prompt with the starting point recommended for this model">Use recommended negative</a>
+            </div>
+
+            <label for="cs_negative_prompt">Negative prompt</label>
+            <textarea id="cs_negative_prompt" class="text_pole textarea_compact" rows="2"></textarea>
+
+            <hr>
+
+            <label for="cs_allow_mature" class="checkbox_label" title="Allow NSFW output. Forces payment in yellow Buzz.">
+                <input id="cs_allow_mature" type="checkbox" />
+                <span>Allow mature content (NSFW)</span>
+            </label>
+
+            <label for="cs_yellow_only" class="checkbox_label" title="Only charge yellow Buzz. Protects green/blue balances if you ever get them.">
+                <input id="cs_yellow_only" type="checkbox" />
+                <span>Spend yellow Buzz only</span>
+            </label>
+
+            <label for="cs_auto_generate" class="checkbox_label" title="Automatically generate an image from the scene after every character reply. Costs Buzz on each generation!">
+                <input id="cs_auto_generate" type="checkbox" />
+                <span>Auto-generate after each reply</span>
+            </label>
+
+            <div class="cs_buttons">
+                <a id="cs_generate" class="menu_button">
+                    <i class="fa-solid fa-image fa-fw"></i>
+                    <span>Generate from scene</span>
+                </a>
+                <a id="cs_estimate" class="menu_button">
+                    <i class="fa-solid fa-coins fa-fw"></i>
+                    <span>Estimate cost</span>
+                </a>
+            </div>
+
+            <details id="cs_joblog_panel" class="cs_joblog_panel">
+                <summary>
+                    <i class="fa-solid fa-terminal fa-fw"></i>
+                    <span>Generation log</span>
+                    <span id="cs_joblog_state" class="cs_joblog_state">idle</span>
+                </summary>
+                <div class="cs_joblog_bar">
+                    <span id="cs_joblog_summary">No job submitted yet.</span>
+                    <span class="cs_joblog_actions">
+                        <a id="cs_joblog_cancel" class="cs_mini_button cs_mini_danger hidden" title="Cancel the running job on the CivitAI side (DELETE /v2/consumer/workflows/{id})">Cancel job</a>
+                        <a id="cs_joblog_copy" class="cs_mini_button" title="Copy the log to the clipboard">Copy</a>
+                        <a id="cs_joblog_clear" class="cs_mini_button" title="Clear the log">Clear</a>
+                    </span>
+                </div>
+                <pre id="cs_joblog" class="cs_joblog"></pre>
+            </details>
+
+            <div id="cs_result" class="cs_result"></div>
+        </div>
+    </div>
+</div>

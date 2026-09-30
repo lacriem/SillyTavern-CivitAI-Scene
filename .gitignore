@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Local dev artefacts
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Spec snapshot used by validate-profiles.mjs (downloaded on demand, not tracked)
+imagegen.yaml
+imagegen.yml
+openapi.yaml
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
