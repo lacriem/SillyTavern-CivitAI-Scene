@@ -1,3 +1,7 @@
+// SillyTavern's own modules are resolved at runtime, not by relative path: this
+// extension can be served from public/scripts/extensions/<name>/ or from
+// /scripts/extensions/third-party/<name>/, and a relative import 404s in the
+// second layout. See st-modules.js.
 import {
     eventSource,
     event_types,
@@ -5,22 +9,32 @@ import {
     saveSettingsDebounced,
     substituteParamsExtended,
     systemUserName,
-} from '../../../script.js';
-import { extension_settings, getContext, renderExtensionTemplateAsync } from '../../extensions.js';
-import { getMessageTimeStamp, humanizedDateTime } from '../../RossAscends-mods.js';
-import { MEDIA_DISPLAY, MEDIA_SOURCE, MEDIA_TYPE } from '../../constants.js';
-import { clamp, delay, getBase64Async, isTrueBoolean, saveBase64AsFile } from '../../utils.js';
-import { SlashCommandParser } from '../../slash-commands/SlashCommandParser.js';
-import { SlashCommand } from '../../slash-commands/SlashCommand.js';
-import { ARGUMENT_TYPE, SlashCommandNamedArgument } from '../../slash-commands/SlashCommandArgument.js';
-import { commonEnumProviders } from '../../slash-commands/SlashCommandCommonEnumsProvider.js';
-import { removeReasoningFromString } from '../../reasoning.js';
+    extension_settings,
+    getContext,
+    renderExtensionTemplateAsync,
+    getMessageTimeStamp,
+    humanizedDateTime,
+    MEDIA_DISPLAY,
+    MEDIA_SOURCE,
+    MEDIA_TYPE,
+    clamp,
+    delay,
+    getBase64Async,
+    isTrueBoolean,
+    saveBase64AsFile,
+    SlashCommandParser,
+    SlashCommand,
+    ARGUMENT_TYPE,
+    SlashCommandNamedArgument,
+    commonEnumProviders,
+    removeReasoningFromString,
+    extensionKey as extensionName,
+} from './st-modules.js';
 import { ENGINE_PROFILES, airBucketsFor, buildWorkflowInput, getProfile, imageSizesFor, isAirCompatible, promptGuideFor, validateProfileValues } from './engines.js';
 
 export { MODULE_NAME };
 
 const MODULE_NAME = 'civitai_scene';
-const extensionName = 'civitai-scene';
 const ORCHESTRATION_URL = 'https://orchestration.civitai.com';
 const SITE_API_URL = 'https://civitai.com/api/v1';
 const SUBMIT_WAIT_SECONDS = 60;
